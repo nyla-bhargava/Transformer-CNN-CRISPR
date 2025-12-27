@@ -1,0 +1,8 @@
+torch
+torchvision
+torchaudio
+transformers==4.45.2
+pandas
+scikit-learn
+einops
+matplotlib
