@@ -27,6 +27,24 @@ An ablation setting without Stage-1 embeddings is provided to quantify the contr
 
 No data leakage occurs between training and evaluation.
 
+## Dataset Citation and Availability
+
+This project uses the **TrueOT benchmark dataset**, a curated collection of experimentally validated CRISPR–Cas9 off-target sites introduced in the following study:
+
+Park, S.-H., Kim, H. H., et al.  
+*The Need for Transfer Learning in CRISPR–Cas Off-Target Scoring*.  
+bioRxiv, 2021. https://doi.org/10.1101/2021.08.28.457846
+
+The TrueOT benchmark is constructed by aggregating off-target measurements from multiple experimental techniques (e.g., GUIDE-seq, CIRCLE-seq, Digenome-seq) and is commonly used to evaluate model generalization performance.
+
+The file `TrueOT_1806uniqueTriplet_gRNA_OT_label.csv` used in this repository corresponds to a **processed version** of the TrueOT benchmark derived from the sources described in the above publication.
+
+The original unprocessed data sources are publicly available from the authors’ repository:
+https://github.com/baolab-rice/CRISPR_OT_scoring/tree/master/TrueOT_unprocessed_data
+
+Due to licensing and redistribution constraints, the processed dataset used in this work is **not redistributed** in this repository. Users should obtain the data from the original sources and place the files in the `data/` directory as described in the documentation.
+
+
 ## Model Variants
 
 Two experimental settings are supported:
