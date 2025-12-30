@@ -21,3 +21,6 @@ The original datasets are available from their respective authors and publicatio
 Users may alternatively obtain the data directly from those original sources.
 
 After downloading, place the files in this directory before running the code.
+
+*These files represent derived and preprocessed versions used solely for research
+and reproducibility purposes.*
