@@ -39,8 +39,8 @@ Model performance was evaluated under a strict generalization setting:
 
 | Model Configuration              | ROC-AUC | PR-AUC |
 |---------------------------------|---------|--------|
-| Stage-2 only (no Stage-1)       | ~0.64   | ~0.22  |
-| Full model (Stage-1 + Stage-2)  | ~0.704  | ~0.301 |
+| Stage-2 only (no Stage-1)       | 0.64 ± 0.03  | 0.22 ± 0.03 |
+| Full model (Stage-1 + Stage-2)  | 0.704 ± 0.03 | 0.301 ± 0.03 |
 
 **Note:** TrueOT results represent out-of-distribution generalization performance on experimentally validated CRISPR off-target sites.
 
