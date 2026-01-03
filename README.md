@@ -62,7 +62,7 @@ The setting is controlled by the `USE_STAGE1` flag in `train.py` and `evaluate.p
 | Model Variant              | AUC  | AUPR |
 |---------------------------|------|------|
 | Stage-2 only              | ~0.64 | ~0.22 |
-| Full model (Stage-1 + 2)  | 0.704 | 0.301 |
+| Full model (Stage-1 + 2)  | ~0.704 | ~0.301 |
 
 These results demonstrate that incorporating pretrained sequence priors significantly improves generalization to experimentally validated off-target sites.
 
