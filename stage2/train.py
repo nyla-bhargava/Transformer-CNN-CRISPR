@@ -1,5 +1,3 @@
-# stage2/train.py
-
 import os
 import sys
 import time
@@ -17,16 +15,10 @@ from stage2.dataset import OffTargetDataset
 from stage2.model import Stage2Model
 
 
-# ---------------------------------------------------------------------
-# Utilities
-# ---------------------------------------------------------------------
 def log(msg):
     print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
 
 
-# ---------------------------------------------------------------------
-# Setup
-# ---------------------------------------------------------------------
 set_seed(42)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -42,9 +34,6 @@ log(f"Device: {device}")
 log(f"USE_STAGE1 = {USE_STAGE1}")
 
 
-# ---------------------------------------------------------------------
-# Load data
-# ---------------------------------------------------------------------
 log("Loading datasets...")
 proxy_df = pd.read_csv("data/Proxy_TrainCV.csv")
 trueot_df = pd.read_csv("data/TrueOT_1806uniqueTriplet_gRNA_OT_label.csv")
@@ -63,9 +52,6 @@ train_df, val_df = train_test_split(
 log(f"Train size: {len(train_df)} | Val size: {len(val_df)}")
 
 
-# ---------------------------------------------------------------------
-# Sequence + gRNA indexing (CRITICAL)
-# ---------------------------------------------------------------------
 MAX_LEN = max(
     proxy_df.gRNA.str.len().max(),
     proxy_df.OT.str.len().max()
@@ -88,9 +74,6 @@ os.makedirs("stage1", exist_ok=True)
 np.save("stage1/all_gRNAs.npy", all_gRNAs)
 
 
-# ---------------------------------------------------------------------
-# Stage-1 embeddings
-# ---------------------------------------------------------------------
 if USE_STAGE1:
     log("Computing Stage-1 sgRNA embeddings...")
     sg_embeddings = compute_sg_embeddings(list(all_gRNAs), device)
@@ -105,9 +88,6 @@ else:
     sg_dim = 768
 
 
-# ---------------------------------------------------------------------
-# Datasets and loaders
-# ---------------------------------------------------------------------
 train_loader = DataLoader(
     OffTargetDataset(train_df, sg_embeddings, gRNA_to_idx, MAX_LEN),
     batch_size=BATCH_SIZE,
@@ -125,9 +105,6 @@ val_loader = DataLoader(
 log("DataLoaders created")
 
 
-# ---------------------------------------------------------------------
-# Model, loss, optimizer
-# ---------------------------------------------------------------------
 model = Stage2Model(sg_dim).to(device)
 criterion = torch.nn.BCEWithLogitsLoss()
 optimizer = torch.optim.AdamW(
@@ -139,9 +116,6 @@ optimizer = torch.optim.AdamW(
 log("Model initialized")
 
 
-# ---------------------------------------------------------------------
-# Training / evaluation loop
-# ---------------------------------------------------------------------
 def run_epoch(loader, train: bool):
     model.train() if train else model.eval()
     ys, ps = [], []
@@ -181,9 +155,6 @@ def run_epoch(loader, train: bool):
     )
 
 
-# ---------------------------------------------------------------------
-# Main training loop + checkpointing
-# ---------------------------------------------------------------------
 best_val_auc = 0.0
 
 log("Starting training loop...")
