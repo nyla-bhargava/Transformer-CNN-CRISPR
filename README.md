@@ -74,11 +74,11 @@ pip install -r requirements.txt
 ```
 ### 2. Train the model
 ```bash
-python stage2/train.py
+python -m stage2.train
 ```
 ### 3. Evaluate on TrueOT
 ```bash
-python stage2/evaluate.py
+python -m stage2.evaluate
 ```
 To run the ablation study, set:
 ```bash

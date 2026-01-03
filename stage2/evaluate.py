@@ -13,6 +13,9 @@ from stage2.model import Stage2Model
 from utils.metrics import mc_dropout
 from utils.seed import set_seed
 
+from stage1.embeddings import compute_sg_embeddings
+
+
 # SETUP
 set_seed(42)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -39,8 +42,10 @@ gRNA_to_idx = {g: i for i, g in enumerate(all_gRNAs)}
 
 # LOAD STAGE-1 EMBEDDINGS
 if USE_STAGE1:
-    sg_embeddings = torch.load("sg_embeddings.pt")
+    print("Computing Stage-1 sgRNA embeddings for evaluation...")
+    sg_embeddings = compute_sg_embeddings(list(all_gRNAs), device)
     sg_dim = sg_embeddings.shape[1]
+    print(f"Embeddings computed: {sg_embeddings.shape}")
 else:
     sg_embeddings = torch.zeros(len(all_gRNAs), 768)
     sg_dim = 768
