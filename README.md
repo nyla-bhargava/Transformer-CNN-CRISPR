@@ -72,11 +72,20 @@ These results demonstrate that incorporating pretrained sequence priors signific
 ```bash
 pip install -r requirements.txt
 ```
-### 2. Train the model
+### 2. Python Version
+
+This project was developed and tested with **Python 3.10**.
+
+> ⚠️ **Important**  
+> Python 3.12 and above may lead to compatibility issues with PyTorch serialization
+> (`torch.load` defaults changed in PyTorch ≥ 2.6).  
+> For full reproducibility, we strongly recommend using **Python 3.10**.
+
+### 3. Train the model
 ```bash
 python -m stage2.train
 ```
-### 3. Evaluate on TrueOT
+### 4. Evaluate on TrueOT
 ```bash
 python -m stage2.evaluate
 ```
