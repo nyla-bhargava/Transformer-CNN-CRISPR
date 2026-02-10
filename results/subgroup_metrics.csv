@@ -1,0 +1,7 @@
+Model,Subset,Mean,SD
+Baseline,GLOBAL,0.7025,0.0320
+Baseline,HARD (≥3 mismatches),0.7029,0.0260
+Baseline,TOP-20 Recall,0.0256,0.0090
+Stage-1 (Gated),GLOBAL,0.7034,0.0290
+Stage-1 (Gated),HARD (≥3 mismatches),0.7046,0.0230
+Stage-1 (Gated),TOP-20 Recall,0.0224,0.0060
