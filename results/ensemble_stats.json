@@ -1,0 +1,7 @@
+{
+  "Model": "Stage-1 (Gated)",
+  "Num_Models": 10,
+  "Mean_AUC": 0.6895,
+  "Ensemble_SD": 0.0039,
+  "Final_Reliability_Percent": 99.43
+}
