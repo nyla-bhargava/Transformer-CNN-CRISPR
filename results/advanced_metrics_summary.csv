@@ -1,0 +1,4 @@
+Metric,Baseline_Mean,Stage1_Mean,P_Value,Significance
+Brier_Score,0.12736,0.12750,0.90899,Not Significant
+Expected_Calibration_Error,0.09841,0.09879,0.92252,Not Significant
+Uncertainty_Error_Correlation,0.6652,0.7682,0.00395,Significant
