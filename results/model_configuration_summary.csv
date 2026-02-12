@@ -1,0 +1,3 @@
+Model,Mean_AUC,SD_AUC,CI_Lower,CI_Upper,Reliability_Percent
+Baseline,0.7030,0.0318,0.679,0.727,95.48
+Stage1_Gated,0.7040,0.0288,0.682,0.726,95.90
