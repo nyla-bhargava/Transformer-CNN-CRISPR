@@ -1,106 +1,151 @@
-# Dual-Stage Transformer–CNN Framework for CRISPR Off-Target Prediction
-This repository contains the official implementation of a **dual-stage deep learning framework** for predicting CRISPR–Cas9 off-target effects. The model integrates **frozen sequence embeddings from a pretrained DNA language model (DNABERT)** with a **CNN–Transformer hybrid architecture** to improve generalization to experimentally validated off-target datasets.
+# A Gated Multi-Stage Architecture for High-Reliability CRISPR Off-Target Prediction
+This repository contains the official implementation of a **dual-stage deep learning framework** for CRISPR-Cas9 off-target prediction with a focus on **uncertainty reliability and probabilistic awareness**.
 
-The implementation is designed with **reproducibility and ablation clarity** as first-class goals and directly corresponds to the results reported in the accompanying student research paper.
+The framework integrates frozen DNABERT sequence embeddings with a CNN-Transformer hybrid architecture and evaluates not only predictive performance but also calibration, ensemble stability, and uncertainty-error alignment.
 
-## Overview
+This implementation corresponds directly to the experiments and statistical analyses reported in the accompanying student research study.
 
-CRISPR off-target prediction remains challenging due to limited experimentally validated data and strong sequence dependence. To address this, we propose a **two-stage approach**:
+## Project Overview
 
-- **Stage-1 (Sequence Prior)**  
-  Frozen DNABERT embeddings are used to encode sgRNA sequences, providing a contextualized sequence-level prior.
+CRISPR off-target prediction remains challenging due to:
 
-- **Stage-2 (Off-target Modeling)**  
-  A CNN–Transformer hybrid network models local mismatches, positional effects, and long-range dependencies between sgRNA and off-target sequences. Stage-1 embeddings are fused at the classification stage.
+- Limited experimentally validated datasets
+- Strong sequence-dependent behavior
+- Poor uncertainty awareness in existing models
 
-An ablation setting without Stage-1 embeddings is provided to quantify the contribution of pretrained sequence priors.
+To address these challenges, we propose a **two-stage reliability-focused framework**.
+
+### Stage-1: Sequence Prior (Frozen DNABERT)
+
+- Uses pretrained DNABERT embeddings
+- Encodes contextualized sgRNA sequence representations
+- Embeddings are frozen (no fine-tuning)
+
+### Stage-2: CNN–Transformer Hybrid
+
+- CNN captures local mismatch patterns
+- Transformer models long-range sequence dependencies
+- Stage-1 embeddings are fused at classification stage
+
+An ablation setting (Stage-2 only) is provided to isolate the contribution of pretrained sequence priors.
+
+### Key Experimental Findings (TrueOT Benchmark)
+
+Evaluation performed across **10 independent random seeds**.
+
+| Metric | Baseline | Stage-1 + Stage-2 | p-value |
+|--------|----------|------------------|---------|
+| ROC-AUC | 0.7030 ± 0.0318 | 0.7040 ± 0.0288 | 0.841 |
+| Brier Score | 0.12736 | 0.12750 | 0.908 |
+| ECE | 0.09841 | 0.09879 | 0.922 |
+| Uncertainty–Error Spearman ρ | 0.6652 | 0.7682 | **0.00395** |
+
+### Interpretation
+
+- Predictive performance remains statistically comparable.
+- Calibration metrics remain similar.
+- **Stage-1 significantly improves uncertainty–error alignment.**
+
+This indicates stronger probabilistic awareness without sacrificing accuracy.
+
+The contribution of this work lies in **improving reliability rather than raw performance gains**.
 
 ## Datasets
+### Proxy Dataset
+Used for training and validation  
+File: `Proxy_TrainCV.csv`
 
-- **Proxy dataset**  
-  Used for model training and validation.  
-  File: `Proxy_TrainCV.csv`
+### TrueOT Benchmark
+Used exclusively for out-of-distribution evaluation  
+File: `TrueOT_1806uniqueTriplet_gRNA_OT_label.csv`
 
-- **TrueOT dataset**  
-  Used exclusively for out-of-distribution generalization evaluation.  
-  File: `TrueOT_1806uniqueTriplet_gRNA_OT_label.csv`
-
-No data leakage occurs between training and evaluation.
-
-## Dataset Citation and Availability
-
-This project uses the **TrueOT benchmark dataset**, a curated collection of experimentally validated CRISPR–Cas9 off-target sites introduced in the following study:
+### Citation
 
 Park, S.-H., Kim, H. H., et al.  
-*The Need for Transfer Learning in CRISPR–Cas Off-Target Scoring*.  
-bioRxiv, 2021. https://doi.org/10.1101/2021.08.28.457846
+**The Need for Transfer Learning in CRISPR–Cas Off-Target Scoring**  
+bioRxiv, 2021  
+https://doi.org/10.1101/2021.08.28.457846
 
-The TrueOT benchmark is constructed by aggregating off-target measurements from multiple experimental techniques (e.g., GUIDE-seq, CIRCLE-seq, Digenome-seq) and is commonly used to evaluate model generalization performance.
+The TrueOT dataset aggregates experimentally validated off-target sites from GUIDE-seq, CIRCLE-seq, Digenome-seq, and related assays.
 
-The file `TrueOT_1806uniqueTriplet_gRNA_OT_label.csv` used in this repository corresponds to a **processed version** of the TrueOT benchmark derived from the sources described in the above publication.
+Due to redistribution constraints, users must obtain the dataset from the google drive given in data/ and place it in the `data/` directory.
 
-The original unprocessed data sources are publicly available from the authors’ repository:
-https://github.com/baolab-rice/CRISPR_OT_scoring/tree/master/TrueOT_unprocessed_data
-
-Due to licensing and redistribution constraints, the processed dataset used in this work is **not redistributed** in this repository. Users should obtain the data from the original sources and place the files in the `data/` directory as described in the documentation.
-
-
-## Model Variants
-
-Two experimental settings are supported:
-
-1. **Full model (Stage-1 + Stage-2)**  
-   Uses frozen DNABERT embeddings during training and evaluation.
-
-2. **Stage-2 only (ablation)**  
-   Replaces Stage-1 embeddings with zero vectors of equal dimensionality.
-
-The setting is controlled by the `USE_STAGE1` flag in `train.py` and `evaluate.py`.
-
-## Results (TrueOT Generalization)
-
-| Model Variant              | AUC  | AUPR |
-|---------------------------|------|------|
-| Stage-2 only              | 0.64 ± 0.03 | 0.22 ± 0.03 |
-| Full model (Stage-1 + 2)  | 0.704 ± 0.03 | 0.301 ± 0.03 |
-
-These results demonstrate that incorporating pretrained sequence priors significantly improves generalization to experimentally validated off-target sites.
-
-## Running the Code
-
-### 1. Install dependencies
+## Installation
+### Clone repository
+1️⃣ Clone Repository
 ```bash
+git clone https://https://github.com/nyla-bhargava/Transformer-CNN-CRISPR.git
+cd Transformer-CNN-CRISPR
+```
+
+### Install dependencies
+```bash
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
-### 2. Python Version
 
-This project was developed and tested with **Python 3.10**.
-
-> ⚠️ **Important**  
-> Python 3.12 and above may lead to compatibility issues with PyTorch serialization
-> (`torch.load` defaults changed in PyTorch ≥ 2.6).  
-> For full reproducibility, we strongly recommend using **Python 3.10**.
-
-### 3. Train the model
+### Training
+Baseline (Stage-2 Only):
 ```bash
-python -m stage2.train
+python -m stage2.train --seed 0
 ```
-### 4. Evaluate on TrueOT
+
+Full Model (Stage-1 + Stage-2):
 ```bash
-python -m stage2.evaluate
+python -m stage2.train --seed 0 --use_stage1
 ```
-To run the ablation study, set:
+
+### Evaluation
+Baseline (Stage-2 Only):
 ```bash
-USE_STAGE1 = False
+python -m stage2.evaluate --seed 0
 ```
-in both train.py and evaluate.py
 
-## Notes
+Full Model (Stage-1 + Stage-2):
+```bash
+python -m stage2.evaluate --seed 0 --use_stage1
+```
 
-- Stage-1 (DNABERT) is never fine-tuned
-- All random seeds are fixed
-- Evaluation uses the same preprocessing pipeline as training
-- This repository is a direct refactor of the original experimental implementation used to generate the reported results.
+### Run All 10 Seeds
+```bash
+scripts/run_10_seeds.sh
+```
 
-## License and Usage
-This code is intended for academic and educational use. Please cite appropriately if used in derivative work.
+### Statistical Analysis
+```bash
+scripts/benchmark_stats_1.py
+scripts/benchmark_stats_2.py
+scripts/benchmark_stats_3.py
+```
+This generates:
+- Statistical summaries
+- CSV files
+- Reliability metrics
+- Uncertainty–error correlation analysis
+
+### Deterministic GPU Execution (Important)
+```bash
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
+```
+
+## Contribution Summary
+
+This work demonstrates that:
+
+- Pretrained sequence priors do not significantly change mean ROC-AUC.
+- They significantly improve uncertainty awareness.
+- Ensemble aggregation enhances deployment stability.
+
+The framework emphasizes **reliability, uncertainty alignment, and probabilistic robustness** for CRISPR off-target modeling.
+
+# License
+
+This repository is intended for academic and educational use.
+
+Please cite appropriately if used in derivative research.
+
+# Author
+Nyla Bhargava
+
+Student Research Project  
+Biomedical Engineering, SRM University
