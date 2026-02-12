@@ -1,4 +1,5 @@
 import os
+os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
 import torch
 import numpy as np
 import pandas as pd
@@ -72,6 +73,7 @@ test_loader = DataLoader(
 
 # Evaluation (MC Dropout)
 print(f"Running MC Dropout Inference (T=30) for {mode_str}...")
+set_seed(args.seed)
 mean_pred, std_pred = mc_dropout(model, test_loader, device, T=30)
 y_true = trueot_df.label.values
 
