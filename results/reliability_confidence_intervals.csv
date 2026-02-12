@@ -1,0 +1,5 @@
+Model,Metric,CI_Lower,CI_Upper,Reliability_Percent
+Baseline,GLOBAL,0.6787,0.7263,95.51
+Baseline,HARD,0.6836,0.7221,96.37
+Stage1,GLOBAL,0.6817,0.7251,95.91
+Stage1,HARD,0.6869,0.7223,96.67

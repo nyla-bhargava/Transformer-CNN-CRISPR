@@ -1,4 +1,0 @@
-Metric,Test,P_Value,Effect_Size,Cohen_d
-ROC-AUC,Paired t-test,0.34479,Small,0.48
-GLOBAL,Paired t-test,0.85529,Negligible,0.03
-HARD,Paired t-test,0.70912,Negligible,0.07
