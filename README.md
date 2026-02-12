@@ -70,6 +70,57 @@ The TrueOT dataset aggregates experimentally validated off-target sites from GUI
 
 Due to redistribution constraints, users must obtain the dataset from the google drive given in data/ and place it in the `data/` directory.
 
+## Precomputed Results & Checkpoints
+
+### Raw Evaluation Metrics
+
+All evaluation outputs for 10 independent seeds are already provided in this repository.
+
+You can find them under:
+```bash
+results/raw_metrics/
+```
+Each file contains:
+
+- ROC-AUC
+- AUPR
+- Mean predictions
+- MC Dropout uncertainty (std)
+- Ground truth labels
+
+These `.npy` files allow full statistical reproduction **without retraining**.
+
+### Statistical Summaries
+
+Benchmark analyses and aggregated statistics are provided in:
+```bash
+results/summaries/
+```
+
+These include:
+
+- Mean ± SD metrics
+- Paired t-tests
+- Variance tests
+- Brier score
+- Expected Calibration Error (ECE)
+- Uncertainty–Error correlation
+- CSV summary files
+
+You may directly reproduce the reported statistics by running:
+
+```bash
+python benchmark_stats_1.py
+python benchmark_stats_2.py
+python benchmark_stats_3.py
+```
+### Pretrained Checkpoints (All 10 Seeds)
+Due to GitHub file size limitations, trained model checkpoints are hosted externally.
+
+🔗 Download Link (All Seeds):
+https://drive.google.com/file/d/1Uemo0uE3MlJ4qrC3ebfEFm49asXO-xPO/view?usp=sharing
+
+
 ## Installation
 ### Clone repository
 1️⃣ Clone Repository
