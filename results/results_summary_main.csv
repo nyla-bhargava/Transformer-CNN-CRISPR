@@ -1,0 +1,4 @@
+Metric,Baseline_Mean,Baseline_SD,Stage1_Mean,Stage1_SD,P_Value,Significance
+GLOBAL_AUC,0.7025,0.032,0.7034,0.029,0.85529,Not Significant
+HARD_AUC,0.7029,0.026,0.7046,0.023,0.70912,Not Significant
+TOP20,0.0256,0.009,0.0224,0.006,0.08684,Trend
