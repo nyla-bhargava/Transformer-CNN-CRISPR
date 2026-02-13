@@ -1,4 +1,4 @@
-# A Gated Multi-Stage Architecture for High-Reliability CRISPR Off-Target Prediction
+# Quantifying Architectural Reliability in CRISPR Off-Target Prediction via Gated Genomic Priors and Deep Ensembling
 This repository contains the official implementation of a **dual-stage deep learning framework** for CRISPR-Cas9 off-target prediction with a focus on **uncertainty reliability and probabilistic awareness**.
 
 The framework integrates frozen DNABERT sequence embeddings with a CNN-Transformer hybrid architecture and evaluates not only predictive performance but also calibration, ensemble stability, and uncertainty-error alignment.
